@@ -2,7 +2,14 @@ const router = require('koa-router')()
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
-    title: 'Hello Koa 2!'
+    title: 'Hello Koa 2!',
+    msg: '哈哈',
+    isMe: true,
+    blogList: [
+      { title: 'aa', id: 1 },
+      { title: 'bb', id: 2 },
+      { title: 'cc', id: 3 }
+    ]
   })
 })
 
@@ -15,5 +22,10 @@ router.get('/json', async (ctx, next) => {
     title: 'koa2 json'
   }
 })
-
+router.get('/profile/:username', async (ctx, next) => {
+  const { username } = ctx.params
+  ctx.body = {
+    username
+  }
+})
 module.exports = router
