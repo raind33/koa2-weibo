@@ -8,7 +8,7 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 
-const { CONF_REDIS } = require('./conf/db.js')
+const { REDIS_CONF } = require('./conf/db.js')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -44,7 +44,7 @@ app.use(
       maxAge: 24 * 60 * 60 * 1000
     },
     store: redisStore({
-      all: `${CONF_REDIS.host}:${CONF_REDIS.port}`
+      all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
     })
   })
 )
