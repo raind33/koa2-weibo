@@ -36,12 +36,12 @@ app.use(
 app.key = ['FBEUBF_jnn&&**$%22']
 app.use(
   session({
-    key: 'weibo.sid' // cookie name默认是‘koa.sid’
+    key: 'weibo.sid', // cookie name默认是‘koa.sid’
     prefix: 'weibo:sess',
     cookie: {
       path: '/',
       httpOnly: true,
-      maxAge: 24*60*60*1000,
+      maxAge: 24 * 60 * 60 * 1000
     },
     store: redisStore({
       all: `${CONF_REDIS.host}:${CONF_REDIS.port}`
