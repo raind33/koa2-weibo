@@ -14,7 +14,8 @@ const jwtSecret = require('./conf/constans.js')
 const { isProd } = require('./utils/env')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+const userApiRputer = require('./routes/api/user')
+const userViewRouter = require('./routes/view/user.js')
 const errorRouter = require('./routes/view/error')
 // error handler
 let onerrorConf = {}
@@ -58,16 +59,17 @@ app.use(
 //   })
 // )
 // jwt 验证
-app.use(
-  jwtKoa({
-    secret: jwtSecret.SECRET
-  }).unless({
-    path: [/^\/users\/login$/]
-  })
-)
+// app.use(
+//   jwtKoa({
+//     secret: jwtSecret.SECRET
+//   }).unless({
+//     path: [/^\/users\/login$/]
+//   })
+// )
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userApiRputer.routes(), userApiRputer.allowedMethods())
+app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(errorRouter.routes(), errorRouter.allowedMethods())
 
 // error-handling

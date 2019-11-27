@@ -5,7 +5,7 @@ router.get('/', async (ctx, next) => {
   debugger
   await ctx.render('index', {
     title: 'Hello Koa 2!',
-    msg: '哈哈',
+    message: '哈哈',
     isMe: true,
     blogList: [
       { title: 'aa', id: 1 },

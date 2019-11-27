@@ -4,7 +4,7 @@
  */
 const seq = require('./seq')
 
-// require('./model.js')
+require('./model')
 
 seq
   .authenticate()
