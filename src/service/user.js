@@ -10,7 +10,7 @@ async function getUserInfo(userName, password) {
   let whereObj = {
     userName
   }
-  if(password) {
+  if (password) {
     Object.assign(whereObj, password)
   }
 
@@ -24,6 +24,16 @@ async function getUserInfo(userName, password) {
   return formatRes
 }
 
+async function createUser({ userName, password, gender = 3, nickName }) {
+  const result = User.create({
+    userName,
+    password,
+    gender,
+    nickName: nickName || userName
+  })
+  return result.dataValues
+}
 module.exports = {
-  getUserInfo
+  getUserInfo,
+  createUser
 }

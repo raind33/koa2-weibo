@@ -10,7 +10,7 @@ const redisStore = require('koa-redis')
 const jwtKoa = require('koa-jwt')
 
 const { REDIS_CONF } = require('./conf/db.js')
-const jwtSecret = require('./conf/constans.js')
+const { SESSION_SECRET_KEY, SECRET } = require('./conf/constans.js')
 const { isProd } = require('./utils/env')
 
 const index = require('./routes/index')
@@ -43,21 +43,21 @@ app.use(
 )
 
 // session配置
-// app.key = ['FBEUBF_jnn&&**$%22']
-// app.use(
-//   session({
-//     key: 'weibo.sid', // cookie name默认是‘koa.sid’
-//     prefix: 'weibo:sess',
-//     cookie: {
-//       path: '/',
-//       httpOnly: true,
-//       maxAge: 24 * 60 * 60 * 1000
-//     },
-//     store: redisStore({
-//       all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-//     })
-//   })
-// )
+app.key = [SESSION_SECRET_KEY]
+app.use(
+  session({
+    key: 'weibo.sid', // cookie name默认是‘koa.sid’
+    prefix: 'weibo:sess',
+    cookie: {
+      path: '/',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000
+    },
+    store: redisStore({
+      all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+    })
+  })
+)
 // jwt 验证
 // app.use(
 //   jwtKoa({
