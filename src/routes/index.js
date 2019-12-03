@@ -1,6 +1,7 @@
 const router = require('koa-router')()
+const { loginCheck, redirectCheck } = require('../middlewares/loginCheck')
 
-router.get('/', async (ctx, next) => {
+router.get('/', redirectCheck, async (ctx, next) => {
   console.log(232)
   debugger
   await ctx.render('index', {
@@ -19,7 +20,7 @@ router.get('/string', async (ctx, next) => {
   ctx.body = 'koa2 string'
 })
 
-router.get('/json', async (ctx, next) => {
+router.get('/json', loginCheck, async (ctx, next) => {
   ctx.body = {
     title: 'koa2 json'
   }

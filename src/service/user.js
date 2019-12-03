@@ -11,7 +11,7 @@ async function getUserInfo(userName, password) {
     userName
   }
   if (password) {
-    Object.assign(whereObj, password)
+    Object.assign(whereObj, { password })
   }
 
   let userInfo = await User.findOne({
