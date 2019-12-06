@@ -3,13 +3,14 @@
  * @author rain
  */
 
-const { getUserInfo, createUser } = require('../service/user')
+const { getUserInfo, createUser, delUser } = require('../service/user')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const {
   registerUserNameNotExistInfo,
   registerUserNameExistInfo,
   registerFailInfo,
-  loginFailInfo
+  loginFailInfo,
+  deleteUserFailInfo
 } = require('../model/ErrorInfo')
 const doCrypto = require('../utils/cryp')
 /**
@@ -60,8 +61,18 @@ async function login(ctx, userName, password) {
     return new ErrorModel(loginFailInfo)
   }
 }
+
+async function delCurUser(userName) {
+  const flag = await delUser(userName)
+  if (!flag) {
+    return new ErrorModel(deleteUserFailInfo)
+  } else {
+    return new SuccessModel()
+  }
+}
 module.exports = {
   isExist,
   register,
-  login
+  login,
+  delCurUser
 }
