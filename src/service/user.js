@@ -25,7 +25,7 @@ async function getUserInfo(userName, password) {
 }
 
 async function createUser({ userName, password, gender = 3, nickName }) {
-  const result = User.create({
+  const result = await User.create({
     userName,
     password,
     gender,

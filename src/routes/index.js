@@ -3,7 +3,6 @@ const { loginCheck, redirectCheck } = require('../middlewares/loginCheck')
 
 router.get('/', redirectCheck, async (ctx, next) => {
   console.log(232)
-  debugger
   await ctx.render('index', {
     title: 'Hello Koa 2!',
     message: '哈哈',

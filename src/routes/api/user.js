@@ -36,8 +36,8 @@ router.post('/login', async ctx => {
 
 // 删除test用户
 router.post('/delete', loginCheck, async ctx => {
-  let { userName } = ctx.session
   if (isTest) {
+    let { userName } = ctx.session.userInfo
     ctx.body = await delCurUser(userName)
   }
 })

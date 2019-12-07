@@ -64,10 +64,10 @@ async function login(ctx, userName, password) {
 
 async function delCurUser(userName) {
   const flag = await delUser(userName)
-  if (!flag) {
-    return new ErrorModel(deleteUserFailInfo)
-  } else {
+  if (flag) {
     return new SuccessModel()
+  } else {
+    return new ErrorModel(deleteUserFailInfo)
   }
 }
 module.exports = {
