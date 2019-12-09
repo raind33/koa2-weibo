@@ -1,3 +1,4 @@
+const path = require('path')
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
@@ -7,6 +8,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const koaStatics = require('koa-static')
 const jwtKoa = require('koa-jwt')
 
 const { REDIS_CONF } = require('./conf/db.js')
@@ -16,6 +18,7 @@ const { isProd } = require('./utils/env')
 const index = require('./routes/index')
 const userApiRputer = require('./routes/api/user')
 const userViewRouter = require('./routes/view/user.js')
+const utilsApiRouter = require('./routes/api/utils')
 const errorRouter = require('./routes/view/error')
 // error handler
 let onerrorConf = {}
@@ -34,7 +37,8 @@ app.use(
 )
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(koaStatics(__dirname + '/public'))
+app.use(koaStatics(path.join(__dirname, '..', '/uploadFiles')))
 
 app.use(
   views(__dirname + '/views', {
@@ -68,6 +72,7 @@ app.use(
 // )
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods())
 app.use(userApiRputer.routes(), userApiRputer.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
 app.use(errorRouter.routes(), errorRouter.allowedMethods())

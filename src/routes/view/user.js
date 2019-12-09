@@ -4,6 +4,7 @@
  */
 
 const router = require('koa-router')()
+const { redirectCheck } = require('../../middlewares/loginCheck')
 
 function getLoginInfo(ctx) {
   let data = {
@@ -26,6 +27,10 @@ router.get('/login', async ctx => {
 })
 router.get('/register', async ctx => {
   await ctx.render('register', getLoginInfo(ctx))
+})
+
+router.get('/setting', redirectCheck, async (ctx) => {
+  await ctx.render('setting', ctx.session.userInfo)
 })
 
 module.exports = router
