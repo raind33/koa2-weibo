@@ -11,7 +11,8 @@ const {
   registerFailInfo,
   loginFailInfo,
   deleteUserFailInfo,
-  changeInfoFailInfo
+  changeInfoFailInfo,
+  changePasswordFailInfo
 } = require('../model/ErrorInfo')
 const doCrypto = require('../utils/cryp')
 /**
@@ -86,10 +87,26 @@ async function changeInfo (ctx, {userName, nickName, city, picture}) {
   }
   return new ErrorModel(changeInfoFailInfo)
 }
+
+async function changePassword (userName, password, newPassword) {
+  const flag = await updateUser({userName, password: doCrypto(password)}, {newPassword: doCrypto(newPassword)})
+  if (flag) {
+    return new SuccessModel()
+  } 
+  return new ErrorModel(changePasswordFailInfo)
+}
+
+// 退出登录
+async function logout (ctx) {
+  delete ctx.session.userInfo
+  return new SuccessModel()
+}
 module.exports = {
   isExist,
   register,
   login,
   delCurUser,
-  changeInfo
+  changeInfo,
+  changePassword,
+  logout
 }

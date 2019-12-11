@@ -4,7 +4,15 @@
  */
 
 const router = require('koa-router')()
-const { isExist, register, login, delCurUser, changeInfo } = require('../../controller/user')
+const {
+  isExist,
+  register,
+  login,
+  delCurUser,
+  changeInfo,
+  changePassword,
+  logout
+} = require('../../controller/user')
 const { genValidator } = require('../../middlewares/validator')
 const { loginCheck } = require('../../middlewares/loginCheck')
 const userValidate = require('../../validator/user')
@@ -42,9 +50,26 @@ router.post('/delete', loginCheck, async ctx => {
   }
 })
 // 修改个人信息
-router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx) => {
+router.patch(
+  '/changeInfo',
+  loginCheck,
+  genValidator(userValidate),
+  async ctx => {
+    const { userName } = ctx.session.userInfo
+    const { nickName, city, picture } = ctx.request.body
+    ctx.body = await changeInfo(ctx, { userName, city, picture, nickName })
+  }
+)
+
+// 修改密码
+router.patch('/changePassword', loginCheck, genValidator(userValidate) ,async ctx => {
   const { userName } = ctx.session.userInfo
-  const { nickName, city, picture } = ctx.request.body
-  ctx.body = await changeInfo(ctx, {userName, city, picture, nickName})
+  const { password, newPassword } = ctx.request.body
+  ctx.body = await changePassword(userName, password, newPassword)
+})
+
+// 退出登录
+router.post('/logout', loginCheck, async ctx => {
+  ctx.body = await logout(ctx)
 })
 module.exports = router
