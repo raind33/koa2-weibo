@@ -43,8 +43,37 @@ async function delUser(userName) {
   return result > 0
 }
 
+async function updateUser(
+  { userName, password },
+  { nickName, city, picture, newPassword }
+) {
+  const data = {}
+  if (nickName) {
+    data.nickName = nickName
+  }
+  if (city) {
+    data.city = city
+  }
+  if (picture) {
+    data.picture = picture
+  }
+  if (newPassword) {
+    data.password = newPassword
+  }
+  const whereData = { userName }
+  if (password) {
+    whereData.password = password
+  }
+  const result = await User.update(data, {
+    where: whereData
+  }
+  )
+
+  return result[0] > 0
+}
 module.exports = {
   getUserInfo,
   createUser,
-  delUser
+  delUser,
+  updateUser
 }
