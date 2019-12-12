@@ -41,8 +41,27 @@ describe('test用户相关api', () => {
     const resCookie = res.headers['set-cookie']
     COOKIE = resCookie
   })
+  test('修改用户信息应该成功', async () => {
+    const res = await server.patch('/api/user/changeInfo').send({
+      nickName: 'ewwr',
+      city: '南京',
+      picture: '/2.jpg'
+    }).set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+  })
+  test('修改密码', async () => {
+    const res = await server.patch('/api/user/changePassword').send({
+      password,
+      newPassword: `p_${Date.now()}`
+    }).set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+  })
   test('用户删除', async () => {
     const res = await server.post('/api/user/delete').set('cookie', COOKIE)
+    expect(res.body.errno).toBe(0)
+  })
+  test('退出登录', async () => {
+    const res = await server.post('/api/user/logout').set('cookie', COOKIE)
     expect(res.body.errno).toBe(0)
   })
   test('用户删除之后不存在', async () => {
