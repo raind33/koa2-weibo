@@ -16,7 +16,9 @@ const { SESSION_SECRET_KEY, SECRET } = require('./conf/constans.js')
 const { isProd } = require('./utils/env')
 
 const indexViewRouter = require('./routes/view/blog.js')
+const profileApiRouter = require('./routes/api/blog-profile')
 const blogHomeApiRouter = require('./routes/api/blog-home')
+const squareApiRouter = require('./routes/api/blog-square')
 const userApiRputer = require('./routes/api/user')
 const userViewRouter = require('./routes/view/user.js')
 const utilsApiRouter = require('./routes/api/utils')
@@ -73,6 +75,8 @@ app.use(
 // )
 // routes
 app.use(blogHomeApiRouter.routes(), blogHomeApiRouter.allowedMethods())
+app.use(squareApiRouter.routes(), squareApiRouter.allowedMethods())
+app.use(profileApiRouter.routes(), profileApiRouter.allowedMethods())
 app.use(indexViewRouter.routes(), indexViewRouter.allowedMethods())
 app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods())
 app.use(userApiRputer.routes(), userApiRputer.allowedMethods())

@@ -1,5 +1,6 @@
-const COOKIE = `weibo.sid=xZYUd_J2xegbisjUPITRkowfHpSq5_UG; weibo.sid.sig=fYtk0glu9PllkOFvqeQhPOVlVWM`
+const COOKIE = `weibo.sid=vQjWhZuwJSeWwWErh0yN3j780NuhgJef; weibo.sid.sig=a1G2Oseubmq7IUoIdbu8cDJaF5Q`
 
 module.exports = {
-  COOKIE
+  COOKIE,
+  USER_NAME: 'zhangsan'
 }

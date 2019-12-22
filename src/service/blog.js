@@ -6,7 +6,7 @@
 const { Blog, User } = require('../db/model')
 const { formatUser, formatBlog } = require('./_format')
 
-async function createBlog ({ userId, content, image }) {
+async function createBlog({ userId, content, image }) {
   const result = await Blog.create({
     userId,
     content,
@@ -15,8 +15,7 @@ async function createBlog ({ userId, content, image }) {
   return result.dataValues
 }
 
-async function getBlogListByUser({userName, pageIndex, pageSize}) {
-
+async function getBlogListByUser({ userName, pageIndex, pageSize }) {
   const userWhere = {}
   if (userName) {
     userWhere.userName = userName
@@ -25,9 +24,7 @@ async function getBlogListByUser({userName, pageIndex, pageSize}) {
   const result = await Blog.findAndCountAll({
     limit: pageSize,
     offset: pageIndex * pageSize,
-    order: [
-      ['id', 'desc']
-    ],
+    order: [['id', 'desc']],
     include: [
       {
         model: User,
@@ -49,7 +46,6 @@ async function getBlogListByUser({userName, pageIndex, pageSize}) {
     count: result.count,
     blogList
   }
-
 }
 
 module.exports = {
